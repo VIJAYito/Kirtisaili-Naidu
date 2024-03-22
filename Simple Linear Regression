@@ -1,0 +1,111 @@
+1) Delivery_time -> Predict delivery time using sorting time
+#import libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+
+#import dataset
+data=pd.read_csv('delivery_time.csv')
+data
+
+#EDA and Data Visualization
+data.info()
+
+sns.distplot(data['Delivery Time'])
+sns.distplot(data['Sorting Time'])
+
+#Renaming Columns
+dataset=data.rename({'Delivery Time':'Delivery_time','Sorting Time':'sorting_Time'},axis=1)
+dataset
+
+#Correlation Analysis
+dataset.corr()
+
+sns.regplot(x=dataset['sorting_time'],y=dataset['delivery_time'])
+
+#Model Building
+model=smf.ols("delivery_time-sorting_time",data=dataset).fit()
+
+model.summary()
+
+#Model Testing
+#Finding Coefficient parameters
+model.params
+
+#Finding tvalues and pvalues
+model.tvalues , model.pvalues
+
+#Finding Rsquared Values
+model.rsquared ,model_rsquared_adj
+
+#Model Prediction
+#Manual prediction for say sorting time 5
+delivery_time = (6.582734) + (1.649020)*(5)
+delivery_time
+
+#Automatic Prediction for say sorting time 5,8
+new_data=pd.series([5,8])
+new_data
+
+data_pred=pd.DataFrame(new_data,columns=['sorting_time'])
+data_pred
+
+model.predict(data_pred)
+
+2) Salary_hike -> Build a prediction model for Salary_hike
+#import libraries
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import statsmodels.formula.api as smf
+import matplotlib.pyplot as plt
+
+#import dataset
+data=pd.read_csv('salary_data.csv')
+data
+
+#EDA and Data Visualization
+data.info()
+
+sns.distplot(data['YearExperience'])
+sns.distplot(data['Salary'])
+
+#Renaming Columns
+dataset1=data1.rename({'YearExperience':'Experience in Year'},axis=1)
+dataset1
+
+#Correlation Analysis
+dataset1.corr()
+
+sns.regplot(x=dataset1['Experience in Year'],y=dataset1['Salary'])
+
+#Model Building
+model=smf.ols("Salary-YearsExperience",data=data1).fit()
+
+model.summary()
+
+#Model Testing
+# Finding Coefficient parameters
+model.params
+
+# Finding tvalues and pvalues
+model.tvalues , model.pvalues
+
+# Finding Rsquared Values
+model.rsquared ,model_rsquared_adj
+
+#Model Prediction
+#Manual prediction for say 3 Years Experience
+Salary = (25792.200199) + (9449.962321)*(3)
+Salary
+
+#Automatic Prediction for say sorting time 5,8
+new_data=pd.series([5,8])
+new_data
+
+data_pred=pd.DataFrame(new_data,columns=['YearsExperience'])
+data_pred
+
+model.predict(data_pred)
